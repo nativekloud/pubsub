@@ -21,6 +21,14 @@
    ))
 
 
+(defn publisher [topic]
+  (.build (Publisher/newBuilder topic)))
+
+(defn topic [project-id topic]
+  (ProjectTopicName/of project-id topic))
+
+(defn set-data [data]
+  (.build (.setData (PubsubMessage/newBuilder) (ByteString/copyFromUtf8 data))))
 
 (defn list-topics [project_id]
   (let [client (TopicAdminClient/create)]
@@ -38,9 +46,9 @@
 (defn publish-async 
   "publish async returns future"
   [project_id topic msg]
-  (let [topic (ProjectTopicName/of project_id topic)
-        publisher (.build (Publisher/newBuilder topic))
-        data  (.build (.setData (PubsubMessage/newBuilder) (ByteString/copyFromUtf8 msg)))]
+  (let [topic (topic project_id topic)
+        publisher (publisher topic)
+        data  (set-data msg)]
     (try (.publish publisher data)
          (catch Exception e (prn "handle this ..."))
          (finally (if publisher (.shutdown publisher))))))
