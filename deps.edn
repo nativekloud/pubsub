@@ -1,7 +1,7 @@
 {:paths ["resources" "src"]
  :deps  {org.clojure/clojure                             {:mvn/version "RELEASE"}
          com.google.auth/google-auth-library-credentials {:mvn/version "0.13.0"}
-         com.google.cloud/google-cloud-pubsub            {:mvn/version "1.62.0"}
+         com.google.cloud/google-cloud-pubsub            {:mvn/version "1.65.0"}
          }
  :aliases
  {:test {:extra-paths ["test"]
