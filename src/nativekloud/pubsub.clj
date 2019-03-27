@@ -18,6 +18,7 @@
     Subscriber
     )
    com.google.protobuf.ByteString
+   [java.util.concurrent TimeUnit]
    ))
 
 
@@ -51,7 +52,7 @@
         data  (set-data msg)]
     (try (.publish publisher data)
          (catch Exception e (prn "handle this ..."))
-         (finally (if publisher (.shutdown publisher))))))
+         (finally (if publisher (.awaitTermination (.shutdown publisher) 1 TimeUnit/MINUTES))))))
 
 (defn subscribe
   "pull subscription and asynchronously pull messages from it."
