@@ -45,7 +45,7 @@
 
 (defn publish-async 
   "publish async returns future"
-  [project_id topic-nam msg]
+  [project_id topic-name msg]
   (let [topic (topic project_id topic-name)
         publisher (publisher topic)
         data  (set-data msg)]
