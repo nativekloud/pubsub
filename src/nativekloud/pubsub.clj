@@ -45,8 +45,8 @@
 
 (defn publish-async 
   "publish async returns future"
-  [project_id topic msg]
-  (let [topic (topic project_id topic)
+  [project_id topic-nam msg]
+  (let [topic (topic project_id topic-name)
         publisher (publisher topic)
         data  (set-data msg)]
     (try (.publish publisher data)
@@ -59,8 +59,7 @@
   (let [subscription (ProjectSubscriptionName/of project_id subscription)
         reciver (reify MessageReceiver
                   (^void receiveMessage [_ ^PubsubMessage msg ^AckReplyConsumer consumer]
-                   (callback  (.toStringUtf8 (.getData msg)) stream)
-                    (.ack consumer)))
+                   (callback  (.toStringUtf8 (.getData msg)) consumer)))
         subscriber (.build (Subscriber/newBuilder subscription reciver))]
 
     (.awaitRunning (.startAsync subscriber))
